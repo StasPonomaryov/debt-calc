@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="UTF-8">
+	<title>Калькулятор погашення кредитної картки</title>
+</head>
+<body>
+<div class="container">
+	<header>
+		<h1 class="text-center">Калькулятор погашення кредитної картки</h1>
+	</header>
+	<div class="bs-stepper">
+		<div class="bs-stepper-header d-print-none" role="tablist">
+			<div class="step" data-target="#generalInfo">
+				<button type="button"
+				        class="btn btn-link step-trigger"
+				        role="tab"
+				        aria-controls="generalInfo"
+				        id="general-part-trigger">
+					<span class="bs-stepper-circle">1</span>
+					<span class="bs-stepper-label">Картка</span>
+				</button>
+			</div>
+			<div class="line"></div>
+			<div class="step" data-target="#advancedInfo">
+				<button type="button"
+				        class="btn btn-link step-trigger"
+				        role="tab"
+				        aria-controls="advancedInfo"
+				        id="advanced-part-trigger">
+					<span class="bs-stepper-circle">2</span>
+					<span class="bs-stepper-label">Умови кредиту</span>
+				</button>
+			</div>
+			<div class="line"></div>
+			<div class="step" data-target="#calculation">
+				<button type="button"
+				        class="btn btn-link step-trigger"
+				        role="tab"
+				        aria-controls="calculation"
+				        id="calculation-part-trigger">
+					<span class="bs-stepper-circle">3</span>
+					<span class="bs-stepper-label">Погашення</span>
+				</button>
+			</div>
+		</div>
+		<div class="bs-stepper-content">
+			<div id="generalInfo"
+			     class="content"
+			     role="tabpanel"
+			     aria-labelledby="general-part-trigger">
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Будь ласка, заповніть обов'язкові поля:</h3>
+						<div class="form-group">
+							<label for="bankName">Назва банку:</label>
+							<input id="bankName"
+							       class="form-control"
+							       type="text"
+							       value=""
+							       placeholder="Альфа банк"/>
+						</div>
+						<div class="form-group">
+							<label for="totalCapacity">Ліміт кредитної картки, грн.<span class="text-danger">*</span>:
+							</label>
+							<input id="totalCapacity"
+							       class="form-control required"
+							       type="text"
+							       value=""
+							       placeholder="10000"
+							       required/>
+						</div>
+						<button class="btn btn-primary" id="stepOneComplete" disabled>Далі</button>
+					</div>
+				</div>
+			</div>
+			<div id="advancedInfo"
+			     class="content"
+			     role="tabpanel"
+			     aria-labelledby="advanced-part-trigger">
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Надайте умови кредитування (вказано в договорі):</h3>
+						<div class="form-group">
+							<label for="totalCapacity">Доступно коштів зараз, грн. (напр., 525)<span
+									class="text-danger">*</span>:
+							</label>
+							<input id="currentBalance"
+							       class="form-control required"
+							       type="text"
+							       value="0"
+							       placeholder="525"
+							       required/>
+						</div>
+						<div class="form-group">
+							<label for="monthlyPercent">Річний відсоток, % (напр., 39.9)<span
+									class="text-danger">*</span>:
+							</label>
+							<input id="monthlyPercent"
+							       class="form-control required"
+							       type="text"
+							       value="0"
+							       placeholder="39.9" required/>
+						</div>
+						<div class="form-group">
+							<label for="monthlyCommission">Щомісячна комісія, грн. (напр., 25):
+							</label>
+							<input id="monthlyCommission"
+							       class="form-control"
+							       type="text"
+							       value="0"
+							       placeholder="25"/>
+						</div>
+						<button class="btn btn-secondary" id="stepOneBack">Повернутися</button>
+						<button class="btn btn-primary" id="stepTwoComplete" disabled>Далі</button>
+					</div>
+				</div>
+			</div>
+			<div id="calculation"
+			     class="content"
+			     role="tabpanel"
+			     aria-labelledby="calculation-part-trigger">
+				<div class="row">
+					<div class="col-md-6">
+						<div id="calcTime" class="d-block">
+							<h3>Оберіть ваш щомісячний внесок:</h3>
+							<div id="slider"
+							     class="mt-3"
+							     data-start="450"
+							     data-step="1"
+							     data-min="400"
+							     data-max="4600">
+								<div id="noUISlider" class="mb-3"></div>
+								<div class="form-group">
+									<label for="sliderValue">сума, грн.:</label>
+									<input class="form-control"
+									       value="450" type="text"
+									       id="sliderValue"/>
+								</div>
+							</div>
+							<div id="calculationInfo"></div>
+							<button class="btn btn-secondary" id="stepTwoBack">Повернутися</button>
+						</div>
+						<div id="calcTable" class="d-none">
+							<h3>Таблиця розрахунків</h3>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead>
+									<tr>
+										<th>Місяць</th>
+										<th>На початок</th>
+										<th>+ внесок</th>
+										<th>Плата по відсоткам</th>
+										<th>Комісія</th>
+										<th>На кінець</th>
+									</tr>
+									<tbody></tbody>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<h3>Загалом:</h3>
+						<div class="table-responsive">
+							<table id="summaryTable" class="table">
+								<tr>
+									<td>Банк:</td>
+									<td id="bankInfo">0</td>
+								</tr>
+								<tr>
+									<td>Ліміт пол картці:</td>
+									<td id="limitInfo">0</td>
+								</tr>
+								<tr>
+									<td>Доступно (поточний баланс):</td>
+									<td id="currentBalanceInfo">0</td>
+								</tr>
+								<tr>
+									<td>Річний відсоток:</td>
+									<td id="monthlyPercentInfo">0</td>
+								</tr>
+								<tr>
+									<td>Щомісячна комісія:</td>
+									<td id="monthlyCommissionInfo">0</td>
+								</tr>
+								<tr>
+									<td>Щомісячний внесок:</td>
+									<td id="monthlyContributionInfo">0</td>
+								</tr>
+								<tr>
+									<td>Кількість місячних платежів:</td>
+									<td id="monthToCompleteInfo">0</td>
+								</tr>
+								<tr>
+									<td>Залишок на картці:</td>
+									<td id="completeBalanceInfo"></td>
+								</tr>
+							</table>
+						</div>
+						<div class="button-area d-print-none">
+							<button id="prepare" class="btn btn-primary">Підготувати</button>
+							<button id="print" class="btn btn-secondary" disabled>Друк</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="alert alert-warning">
+			УВАГА! Це програмне забезпечення покликане рахувати ПРИБЛИЗНІ результати по розрахункам по кредитним карткам і не може бути використане інакше. Результати обчислень не є офіційним джерелом інформації. Найточніші результати обчислень може надати тільки банк, що надає кредитну картку.
+		</div>
+		<div class="bg-light">
+			<div class="row">
+				<div class="col">
+					<p class="small text-muted p-3">&copy; &laquo;Калькулятор кредитних карток&raquo;, версія 1.0 (beta)<br />Розроблено: <a href="https://www.alex.kr.ua/dev/" target="_blank">Пономарьов Станіслав</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="https://unpkg.com/bs-stepper/dist/js/bs-stepper.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

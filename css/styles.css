@@ -1,0 +1,20 @@
+h1 {
+    margin-top: 2rem;
+}
+
+#summaryTable td:nth-child(1) {
+    font-weight: bold;
+}
+
+#calcTable {
+    font-size: 12px;
+}
+
+footer a {
+    color: #777;
+    text-decoration: underline;
+}
+footer a:hover {
+    color: #777;
+    text-decoration: none;
+}
